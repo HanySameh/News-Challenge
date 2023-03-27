@@ -1,4 +1,4 @@
-# news_challenge
+# News Challenge
 
 A new Flutter project.
 
