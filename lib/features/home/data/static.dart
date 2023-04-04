@@ -1,5 +1,5 @@
-import '../models/breaking_model.dart';
-import '../models/rec_model.dart';
+import 'models/breaking_model.dart';
+import 'models/rec_model.dart';
 
 List<BreakingModel> breakingNewsList = [
   BreakingModel(

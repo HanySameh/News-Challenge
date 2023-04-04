@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/static.dart';
-import 'breaking_slider_item.dart';
+import '../../../data/static.dart';
+import 'home_widgets.dart';
 
 class BreakingSlider extends StatefulWidget {
   const BreakingSlider({super.key});

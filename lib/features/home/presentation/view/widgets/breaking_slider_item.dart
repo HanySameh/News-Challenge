@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/static.dart';
-import '../../models/breaking_model.dart';
+import '../../../data/models/breaking_model.dart';
+import '../../../data/static.dart';
 
 class BreakingSliderItem extends StatelessWidget {
   const BreakingSliderItem({

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/rec_model.dart';
+import '../../../data/models/rec_model.dart';
 
 class RecNewsItem extends StatelessWidget {
   const RecNewsItem({

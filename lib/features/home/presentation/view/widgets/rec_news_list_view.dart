@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data/static.dart';
+import '../../../data/static.dart';
 import 'rec_news_item.dart';
 
 class RecNewsListView extends StatelessWidget {

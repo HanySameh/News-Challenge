@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/breaking_slider.dart';
-import '../widgets/home_app_bar.dart';
-import '../widgets/rec_news_item.dart';
-import '../widgets/rec_news_list_view.dart';
-import '../widgets/title_bar.dart';
+import 'widgets/home_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
