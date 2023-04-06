@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
+import '../../../bookmark/presentation/view/bookmark_screen.dart';
 import 'home_screen.dart';
 
 class NavBar extends StatefulWidget {
@@ -17,7 +18,7 @@ class _NavBarState extends State<NavBar> {
     return [
       const HomeScreen(),
       const HomeScreen(),
-      const HomeScreen(),
+      const BookmarkScreen(),
       const HomeScreen(),
     ];
   }

@@ -15,11 +15,10 @@ class RecNewsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: recNewsList.length,
+      itemCount: news.length,
       padding: EdgeInsets.zero,
       itemBuilder: (context, index) => RecNewsItem(
-        size: size,
-        recModel: recNewsList[index],
+        newsModel: news[index],
       ),
     );
   }

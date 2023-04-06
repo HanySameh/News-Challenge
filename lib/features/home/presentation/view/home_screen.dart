@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
         slivers: [
           SliverPersistentHeader(
             pinned: true,
+            floating: true,
             delegate: PersistentHeader(),
           ),
           SliverToBoxAdapter(

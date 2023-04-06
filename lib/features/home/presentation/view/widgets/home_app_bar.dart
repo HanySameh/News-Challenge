@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_challenge/core/utils/extensions.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -12,19 +13,17 @@ class HomeAppBar extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
-          CustomIconButton(
+          CustomButton(
             icon: Icons.menu,
             onTap: () {},
           ),
           const Spacer(),
-          CustomIconButton(
+          CustomButton(
             icon: CupertinoIcons.search,
             onTap: () {},
           ),
-          const SizedBox(
-            width: 10.0,
-          ),
-          CustomIconButton(
+          10.0.spaceX,
+          CustomButton(
             icon: Icons.notifications,
             onTap: () {},
           ),
@@ -34,8 +33,8 @@ class HomeAppBar extends StatelessWidget {
   }
 }
 
-class CustomIconButton extends StatelessWidget {
-  const CustomIconButton({
+class CustomButton extends StatelessWidget {
+  const CustomButton({
     super.key,
     required this.icon,
     required this.onTap,

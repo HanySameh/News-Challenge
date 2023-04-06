@@ -29,12 +29,12 @@ class _BreakingSliderState extends State<BreakingSlider> {
       children: [
         CarouselSlider.builder(
           carouselController: _controller,
-          itemCount: breakingNewsList.length,
+          itemCount: news.length,
           itemBuilder:
               (BuildContext context, int itemIndex, int pageViewIndex) =>
                   BreakingSliderItem(
             size: size,
-            breakingModel: breakingNewsList[itemIndex],
+            newsModel: news[itemIndex],
           ),
           options: CarouselOptions(
             autoPlay: true,
@@ -49,7 +49,7 @@ class _BreakingSliderState extends State<BreakingSlider> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: breakingNewsList.asMap().entries.map((entry) {
+          children: news.asMap().entries.map((entry) {
             return GestureDetector(
               onTap: () => _controller.animateToPage(entry.key),
               child: AnimatedContainer(

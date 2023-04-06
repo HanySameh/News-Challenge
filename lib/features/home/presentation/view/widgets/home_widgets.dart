@@ -4,3 +4,8 @@ export './home_app_bar.dart';
 export './rec_news_item.dart';
 export './rec_news_list_view.dart';
 export './title_bar.dart';
+export './news_details_app_bar.dart';
+export './category_widget.dart';
+export './info_item.dart';
+export './custom_icon_button.dart';
+export './news_details_body.dart';

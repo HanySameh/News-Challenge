@@ -1,17 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_challenge/core/utils/extensions.dart';
 
-import '../../../data/models/rec_model.dart';
+import '../../../data/models/news_model.dart';
 
 class RecNewsItem extends StatelessWidget {
   const RecNewsItem({
     super.key,
-    required this.size,
-    required this.recModel,
+    required this.newsModel,
   });
 
-  final Size size;
-  final RecModel recModel;
+  final NewsModel newsModel;
 
   @override
   Widget build(BuildContext context) {
@@ -20,38 +19,36 @@ class RecNewsItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),
         child: SizedBox(
-          height: size.height * 0.15,
+          height: context.height * 0.15,
           child: Row(
             children: [
               Container(
-                width: size.width * 0.35,
-                height: size.height * 0.15,
+                width: context.width * 0.35,
+                height: context.height * 0.15,
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: recModel.image,
+                  imageUrl: newsModel.image,
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-              SizedBox(
-                width: size.width * 0.04,
-              ),
+              (context.width * 0.04).spaceX,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      recModel.category,
+                      newsModel.category,
                       style: const TextStyle(
                         color: Colors.grey,
                       ),
                     ),
                     Text(
-                      recModel.title,
+                      newsModel.title,
                       style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -64,29 +61,23 @@ class RecNewsItem extends StatelessWidget {
                         CircleAvatar(
                           radius: 12,
                           backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(recModel.authorImage),
+                          backgroundImage: NetworkImage(newsModel.authorImage),
                         ),
-                        SizedBox(
-                          width: size.width * 0.015,
-                        ),
+                        (context.width * 0.015).spaceX,
                         Text(
-                          recModel.authorName,
+                          newsModel.authorName,
                           style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
-                        SizedBox(
-                          width: size.width * 0.015,
-                        ),
+                        (context.width * 0.015).spaceX,
                         const CircleAvatar(
                           backgroundColor: Colors.grey,
                           radius: 3.0,
                         ),
-                        SizedBox(
-                          width: size.width * 0.015,
-                        ),
+                        (context.width * 0.015).spaceX,
                         Text(
-                          recModel.date,
+                          newsModel.date,
                           style: const TextStyle(
                             color: Colors.grey,
                           ),
