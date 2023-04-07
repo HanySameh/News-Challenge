@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
 import '../../../data/models/news_model.dart';
-import '../../manager/news_details_cubit/home_cubit.dart';
+import '../../manager/bookmark_cubit/bookmark_cubit.dart';
 import 'home_widgets.dart';
 
 class NewsDetailsAppBar extends StatelessWidget {
@@ -32,8 +32,7 @@ class NewsDetailsAppBar extends StatelessWidget {
           children: [
             Positioned.fill(
               child: CachedNetworkImage(
-                imageUrl:
-                    newsModel.image,
+                imageUrl: newsModel.image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -129,14 +128,12 @@ class NewsDetailsAppBar extends StatelessWidget {
       ),
       collapsedHeight: context.height * 0.09,
       actions: [
-        BlocBuilder<NewsDetailsCubit, NewsDetailsState>(
+        BlocBuilder<BookmarkCubit, BookmarkState>(
           builder: (context, state) {
             return CustomIconButton(
-              onTap: context.read<NewsDetailsCubit>().addToBookmarked,
+              onTap: context.read<BookmarkCubit>().addToBookmarked,
               child: Icon(
-                context.read<NewsDetailsCubit>().isMark
-                    ? Icons.bookmark
-                    : Icons.bookmark_border,
+                newsModel.isMark ? Icons.bookmark : Icons.bookmark_border,
                 size: 30.0,
               ),
             );

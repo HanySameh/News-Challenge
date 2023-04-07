@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../manager/recommended_news_cubit/recommended_news_cubit.dart';
 import 'widgets/home_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,7 +10,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
@@ -21,7 +22,6 @@ class HomeScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: Column(
               children: const [
-                // const HomeAppBar(),
                 TitleBar(
                   title: 'Breaking News',
                 ),
@@ -32,8 +32,8 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          SliverFillRemaining(
-            child: RecNewsListView(size: size),
+          const SliverFillRemaining(
+            child: RecNewsListView(),
           ),
         ],
       ),

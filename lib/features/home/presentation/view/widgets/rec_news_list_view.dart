@@ -6,10 +6,7 @@ import 'rec_news_item.dart';
 class RecNewsListView extends StatelessWidget {
   const RecNewsListView({
     super.key,
-    required this.size,
   });
-
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
