@@ -19,3 +19,11 @@ News App With Flutter & [News API](https://newsapi.org/)
 | Search | Video | Final |
 | <img src="https://user-images.githubusercontent.com/78942298/232080732-39ae0f63-5abf-4134-9acc-5473c5873c1c.jpeg" width=300> | <video src="https://user-images.githubusercontent.com/78942298/232083406-f233bd30-6c04-431d-ad5c-9a7ffe05f61a.mp4" width=300> | <img src="https://user-images.githubusercontent.com/78942298/232081825-2011ad94-7459-4ed1-ba5d-6f085730668f.jpeg" width=300> 
 
+## Tech Used
+**Server**: API ([News API](https://newsapi.org/))
+
+**Client**: Flutter, Bloc(Cubit)
+
+**Architecture pattern**: MVVM
+
+**DI** -> GetIt package
