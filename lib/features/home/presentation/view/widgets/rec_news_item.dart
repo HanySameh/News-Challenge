@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
+import '../../../../../core/utils/assets_manager.dart';
 import '../../../../../core/utils/router.dart';
-import '../../../data/models/news_model.dart';
+import '../../../data/models/models.dart';
 
 class RecNewsItem extends StatelessWidget {
   const RecNewsItem({
@@ -37,10 +39,16 @@ class RecNewsItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: newsModel.image,
+                    imageUrl: newsModel.urlToImage!,
                     fit: BoxFit.cover,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                    errorWidget: (context, url, error) => Image.asset(
+                      AssetsManager.newsImagePlaceholder,
+                      fit: BoxFit.cover,
+                    ),
+                    placeholder: (context, url) => Image.asset(
+                      AssetsManager.newsImagePlaceholder,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 (context.width * 0.04).spaceX,
@@ -49,14 +57,14 @@ class RecNewsItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                        newsModel.category,
-                        style: const TextStyle(
+                      const Text(
+                        'Sports',
+                        style: TextStyle(
                           color: Colors.grey,
                         ),
                       ),
                       Text(
-                        newsModel.title,
+                        newsModel.title!,
                         style: const TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
@@ -66,15 +74,16 @@ class RecNewsItem extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 12,
                             backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                NetworkImage(newsModel.authorImage),
+                            backgroundImage: NetworkImage(
+                              AssetsManager.defaultAuthorImageUrl,
+                            ),
                           ),
                           (context.width * 0.015).spaceX,
                           Text(
-                            newsModel.authorName,
+                            newsModel.source!.name!,
                             style: const TextStyle(
                               color: Colors.grey,
                             ),
@@ -86,7 +95,8 @@ class RecNewsItem extends StatelessWidget {
                           ),
                           (context.width * 0.015).spaceX,
                           Text(
-                            newsModel.date,
+                            DateFormat.yM()
+                                .format(DateTime.parse(newsModel.publishedAt!)),
                             style: const TextStyle(
                               color: Colors.grey,
                             ),

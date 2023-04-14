@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
-import '../../../data/models/news_model.dart';
-import '../../manager/bookmark_cubit/bookmark_cubit.dart';
+import '../../../../../core/utils/assets_manager.dart';
+import '../../../../bookmark/presentation/manager/bookmark_cubit/bookmark_cubit.dart';
+import '../../../data/models/models.dart';
 import 'home_widgets.dart';
 
 class NewsDetailsAppBar extends StatelessWidget {
@@ -32,7 +34,15 @@ class NewsDetailsAppBar extends StatelessWidget {
           children: [
             Positioned.fill(
               child: CachedNetworkImage(
-                imageUrl: newsModel.image,
+                imageUrl: newsModel.urlToImage!,
+                errorWidget: (context, url, error) => Image.asset(
+                  AssetsManager.newsImagePlaceholder,
+                  fit: BoxFit.cover,
+                ),
+                placeholder: (context, url) => Image.asset(
+                  AssetsManager.newsImagePlaceholder,
+                  fit: BoxFit.cover,
+                ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,7 +60,7 @@ class NewsDetailsAppBar extends StatelessWidget {
                   SizedBox(
                     width: context.width * 0.8,
                     child: Text(
-                      newsModel.title,
+                      newsModel.title!,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -64,7 +74,7 @@ class NewsDetailsAppBar extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        newsModel.status,
+                        'Trending',
                         style: TextStyle(
                           color: Colors.grey[200],
                         ),
@@ -76,7 +86,8 @@ class NewsDetailsAppBar extends StatelessWidget {
                       ),
                       (context.width * 0.02).spaceX,
                       Text(
-                        newsModel.date,
+                        DateFormat.yMMMMEEEEd()
+                            .format(DateTime.parse(newsModel.publishedAt!)),
                         style: TextStyle(
                           color: Colors.grey[300],
                           fontSize: 12.0,
@@ -131,9 +142,11 @@ class NewsDetailsAppBar extends StatelessWidget {
         BlocBuilder<BookmarkCubit, BookmarkState>(
           builder: (context, state) {
             return CustomIconButton(
-              onTap: context.read<BookmarkCubit>().addToBookmarked,
+              onTap: () {
+                context.read<BookmarkCubit>().addToBookmarked(newsModel);
+              },
               child: Icon(
-                newsModel.isMark ? Icons.bookmark : Icons.bookmark_border,
+                newsModel.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
                 size: 30.0,
               ),
             );

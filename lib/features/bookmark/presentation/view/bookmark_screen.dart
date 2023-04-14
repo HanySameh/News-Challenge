@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
-import '../../../home/data/static.dart';
-import '../../../home/presentation/manager/bookmark_cubit/bookmark_cubit.dart';
 import '../../../home/presentation/view/widgets/home_widgets.dart';
+import '../manager/bookmark_cubit/bookmark_cubit.dart';
 
 class BookmarkScreen extends StatelessWidget {
   const BookmarkScreen({super.key});
@@ -12,7 +11,7 @@ class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BookmarkCubit(news[0]),
+      create: (context) => BookmarkCubit(),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,17 +55,41 @@ class _BookmarkList extends StatelessWidget {
           SliverFillRemaining(
             child: BlocBuilder<BookmarkCubit, BookmarkState>(
               builder: (context, state) {
-                context.read<BookmarkCubit>().addToList();
+                context.read<BookmarkCubit>().getSavedNewsFromStorage();
                 if (context.read<BookmarkCubit>().bookmarkedNews.isNotEmpty) {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount:
                         context.read<BookmarkCubit>().bookmarkedNews.length,
                     itemBuilder: (context, index) {
-                      context.read<BookmarkCubit>().addToList();
-                      return RecNewsItem(
-                        newsModel:
-                            context.read<BookmarkCubit>().bookmarkedNews[index],
+                      final String item = context
+                          .read<BookmarkCubit>()
+                          .bookmarkedNews[index]
+                          .toString();
+                      return Dismissible(
+                        key: Key(item),
+                        onDismissed: (direction) => context
+                            .read<BookmarkCubit>()
+                            .removeNewsModelFromLocal(context
+                                .read<BookmarkCubit>()
+                                .bookmarkedNews[index]),
+                        background: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: const Icon(
+                            Icons.bookmark_remove,
+                            color: Colors.white,
+                            size: 50.0,
+                          ),
+                        ),
+                        child: RecNewsItem(
+                          newsModel: context
+                              .read<BookmarkCubit>()
+                              .bookmarkedNews[index],
+                        ),
                       );
                     },
                   );
@@ -112,9 +135,13 @@ class _AppBar extends StatelessWidget {
             icon: Icons.menu,
             onTap: () {},
           ),
-          CustomButton(
-            icon: Icons.search,
-            onTap: () {},
+          BlocBuilder<BookmarkCubit, BookmarkState>(
+            builder: (context, state) {
+              return CustomButton(
+                icon: Icons.delete,
+                onTap: context.read<BookmarkCubit>().removeAll,
+              );
+            },
           ),
         ],
       ),

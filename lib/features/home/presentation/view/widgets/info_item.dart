@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
-import '../../../data/models/news_model.dart';
+import '../../../data/models/news_model/news_model.dart';
 
 class InfoItem extends StatelessWidget {
   const InfoItem({
@@ -17,7 +18,7 @@ class InfoItem extends StatelessWidget {
     return Row(
       children: [
         Text(
-          newsModel.authorName,
+          newsModel.source!.name!,
           style: TextStyle(
             color: Colors.grey[200],
           ),
@@ -35,7 +36,7 @@ class InfoItem extends StatelessWidget {
         ),
         (context.width * 0.02).spaceX,
         Text(
-          newsModel.date,
+          DateFormat.yM().format(DateTime.parse(newsModel.publishedAt!)),
           style: TextStyle(
             color: Colors.grey[300],
             fontSize: 12.0,

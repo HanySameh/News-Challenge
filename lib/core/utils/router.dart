@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/data/models/news_model.dart';
-import '../../features/home/presentation/manager/bookmark_cubit/bookmark_cubit.dart';
+import '../../features/bookmark/presentation/manager/bookmark_cubit/bookmark_cubit.dart';
+import '../../features/home/data/models/models.dart';
 import '../../features/home/presentation/view/nav_bar.dart';
 import '../../features/home/presentation/view/news_details_screen.dart';
 
@@ -19,7 +19,7 @@ abstract class AppRouter {
       GoRoute(
         path: newsDetailsScreenRoute,
         builder: (context, state) => BlocProvider(
-          create: (context) => BookmarkCubit(state.extra as NewsModel),
+          create: (context) => BookmarkCubit(),
           child: NewsDetailsScreen(
             newsModel: state.extra as NewsModel,
           ),

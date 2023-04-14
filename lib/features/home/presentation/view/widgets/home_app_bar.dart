@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
+import '../../../../../core/utils/functions/show_search.dart';
+
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
@@ -20,7 +22,9 @@ class HomeAppBar extends StatelessWidget {
           const Spacer(),
           CustomButton(
             icon: CupertinoIcons.search,
-            onTap: () {},
+            onTap: () {
+              showSearchBar(context);
+            },
           ),
           10.0.spaceX,
           CustomButton(
@@ -46,7 +50,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: CircleAvatar(
         radius: 20.0,
         backgroundColor: Colors.grey[300],

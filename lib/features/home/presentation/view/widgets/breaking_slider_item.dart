@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
+import '../../../../../core/utils/assets_manager.dart';
 import '../../../../../core/utils/router.dart';
-import '../../../data/models/news_model.dart';
+import '../../../data/models/news_model/news_model.dart';
 import 'home_widgets.dart';
 
 class BreakingSliderItem extends StatelessWidget {
   const BreakingSliderItem({
     super.key,
-    required this.size,
     required this.newsModel,
   });
 
-  final Size size;
   final NewsModel newsModel;
 
   @override
@@ -25,16 +24,17 @@ class BreakingSliderItem extends StatelessWidget {
         extra: newsModel,
       ),
       child: Container(
-        width: size.width * 0.85,
-        height: size.height * 0.25,
+        width: context.width * 0.85,
+        height: context.height * 0.25,
         clipBehavior: Clip.antiAlias,
+        margin: const EdgeInsets.only(bottom: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.35),
-              offset: const Offset(0, 7),
-              blurRadius: 15.0,
+              offset: const Offset(0, 4),
+              blurRadius: 3.0,
             ),
           ],
         ),
@@ -42,8 +42,15 @@ class BreakingSliderItem extends StatelessWidget {
           children: [
             Positioned.fill(
               child: CachedNetworkImage(
-                imageUrl: newsModel.image,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                imageUrl: newsModel.urlToImage!,
+                errorWidget: (context, url, error) => Image.asset(
+                  AssetsManager.newsImagePlaceholder,
+                  fit: BoxFit.cover,
+                ),
+                placeholder: (context, url) => Image.asset(
+                  AssetsManager.newsImagePlaceholder,
+                  fit: BoxFit.cover,
+                ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -63,7 +70,7 @@ class BreakingSliderItem extends StatelessWidget {
                     SizedBox(
                       width: context.width * 0.6,
                       child: Text(
-                        newsModel.title,
+                        newsModel.title!,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

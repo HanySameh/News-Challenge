@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
-import '../../../data/models/news_model.dart';
+import '../../../../../core/utils/assets_manager.dart';
+import '../../../data/models/models.dart';
 
 class NewsDetailsBody extends StatelessWidget {
   const NewsDetailsBody({
@@ -19,20 +20,22 @@ class NewsDetailsBody extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 22.0,
                 backgroundImage: NetworkImage(
-                  newsModel.authorImage,
+                  AssetsManager.defaultAuthorImageUrl,
                 ),
               ),
               (context.width * 0.02).spaceX,
               Text(
-                newsModel.authorName,
+                newsModel.source!.name!,
                 style: const TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 20.0,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
                 ),
+                maxLines: 2,
               ),
               (context.width * 0.01).spaceX,
               const Icon(
@@ -44,7 +47,15 @@ class NewsDetailsBody extends StatelessWidget {
           ),
           (context.height * 0.04).spaceY,
           Text(
-            newsModel.description.replaceAll('. ', '.\n\n'),
+            newsModel.description!.replaceAll('. ', '.\n\n'),
+            style: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          (context.height * 0.04).spaceY,
+          Text(
+            newsModel.content!.replaceAll('. ', '.\n\n'),
             style: const TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w500,

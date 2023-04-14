@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/static.dart';
+import '../../../../../core/widgets/error_widget.dart';
+import '../../manager/breaking_news_cubit/breaking_news_cubit.dart';
 import 'home_widgets.dart';
 
 class BreakingSlider extends StatefulWidget {
@@ -13,63 +15,76 @@ class BreakingSlider extends StatefulWidget {
 }
 
 class _BreakingSliderState extends State<BreakingSlider> {
-  int _current = 0;
-  late final CarouselController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = CarouselController();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        CarouselSlider.builder(
-          carouselController: _controller,
-          itemCount: news.length,
-          itemBuilder:
-              (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  BreakingSliderItem(
-            size: size,
-            newsModel: news[itemIndex],
-          ),
-          options: CarouselOptions(
-            autoPlay: true,
-            enlargeCenterPage: true,
-            aspectRatio: 2.0,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _current = index;
-              });
-            },
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: news.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: _current == entry.key ? 30.0 : 12.0,
-                height: 12.0,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                  // shape: BoxShape.circle,
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: _current == entry.key
-                      ? CupertinoColors.activeBlue
-                      : Colors.grey,
+    return BlocBuilder<BreakingNewsCubit, BreakingNewsState>(
+      builder: (context, state) {
+        if (state is BreakingNewsSuccessState) {
+          return Column(
+            children: [
+              CarouselSlider.builder(
+                carouselController:
+                    context.read<BreakingNewsCubit>().carouselController,
+                itemCount: state.news.length,
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) =>
+                        BreakingSliderItem(
+                  newsModel: state.news[itemIndex],
+                ),
+                options: CarouselOptions(
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  aspectRatio: 2.0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      context.read<BreakingNewsCubit>().current = index;
+                    });
+                  },
                 ),
               ),
-            );
-          }).toList(),
-        ),
-      ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: state.news.asMap().entries.map(
+                  (entry) {
+                    return GestureDetector(
+                      onTap: () => context
+                          .read<BreakingNewsCubit>()
+                          .carouselController
+                          .animateToPage(entry.key),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: context.read<BreakingNewsCubit>().current ==
+                                entry.key
+                            ? 30.0
+                            : 12.0,
+                        height: 12.0,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 4.0,
+                        ),
+                        decoration: BoxDecoration(
+                          // shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: context.read<BreakingNewsCubit>().current ==
+                                  entry.key
+                              ? CupertinoColors.activeBlue
+                              : Colors.grey,
+                        ),
+                      ),
+                    );
+                  },
+                ).toList(),
+              ),
+            ],
+          );
+        } else if (state is BreakingNewsFailureState) {
+          return ErrorItem(
+            message: state.errMessage,
+          );
+        } else {
+          return const BreakingNewsLoading();
+        }
+      },
     );
   }
 }

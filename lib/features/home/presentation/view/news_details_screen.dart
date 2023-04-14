@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_challenge/core/utils/extensions.dart';
 
-import '../../data/models/news_model.dart';
+import '../../../../core/utils/functions/launch_url.dart';
+import '../../data/models/models.dart';
 import 'widgets/home_widgets.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
@@ -14,6 +16,14 @@ class NewsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => launchCustomUrl(context, newsModel.url),
+        backgroundColor: CupertinoColors.activeBlue,
+        child: const Icon(
+          Icons.arrow_outward_rounded,
+          size: 30.0,
+        ),
+      ),
       body: Stack(
         children: [
           Positioned.fill(
